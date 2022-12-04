@@ -18,7 +18,19 @@ def part_1(data):
     filtered = filter(lambda rp: is_range_subsection(rp[0], rp[1]) or is_range_subsection(rp[1], rp[0]), range_pairs)
     return len(list(filtered))
 
+
+def is_range_overlap(range_a, range_b):
+    return range_a[0] >= range_b[0] and range_a[0] < range_b[1] or\
+           range_a[1] > range_b[0] and range_a[1] <= range_b[1] or\
+           range_a[0] < range_b[0] and range_a[1] > range_b[1]
+
+def part_2(data):
+    range_pairs = parse_data(data)
+    filtered = filter(lambda rp: is_range_overlap(rp[0], rp[1]), range_pairs)
+    return len(list(filtered))
+
 if __name__ == '__main__':
     with open('input.txt', 'r') as file:
         data = file.read()
     print(part_1(data))
+    print(part_2(data))
