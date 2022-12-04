@@ -1,5 +1,5 @@
 import unittest
-from day3 import part_1
+from day3 import part_1, part_2
 
 class TestDay(unittest.TestCase):
 
@@ -13,6 +13,12 @@ class TestDay(unittest.TestCase):
         self.assertEqual(
             part_1("vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"),
             157
+        )
+
+    def test_part_2(self):
+        self.assertEqual(
+            part_2("vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"),
+            70
         )
 
 if __name__ == '__main__':
