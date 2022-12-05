@@ -1,5 +1,4 @@
 from pipe import select, where
-from toolz import accumulate
 
 def new_instruction(move_count, from_index, to_index):
     return {
@@ -37,7 +36,22 @@ def part_1(data):
 
     return "".join([stack[-1:][0] for stack in stacks])
 
+def part_2(data):
+    [stacks, instructions] = parse_data(data)
+
+    for ins in instructions:
+        move_count = ins["move_count"]
+        from_index = ins["from_index"]
+        to_index = ins["to_index"]
+
+        items = stacks[from_index][-move_count:]
+        del stacks[from_index][-move_count:]
+        stacks[to_index].extend(items)
+
+    return "".join([stack[-1:][0] for stack in stacks])
+
 if __name__ == '__main__':
     with open('input.txt', 'r') as file:
         data = file.read()
     print(part_1(data))
+    print(part_2(data))
