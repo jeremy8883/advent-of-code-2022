@@ -1,4 +1,4 @@
-from ramda import reduce, assoc_path
+from ramda import reduce, assoc_path, pipe, filter, sum
 from more_itertools import peekable
 from utils.print_dict import print_dict
 
@@ -90,23 +90,37 @@ def add_dir_sizes(dir_or_file):
     else:
         return dir_or_file["size"]
 
-def find_dirs_sizes_less_than(dir, amount = 100000):
-    sizes = []
-    if dir["size"] <= amount:
-        sizes = sizes + [dir["size"]]
+def get_dir_size_list(dir):
+    sizes = [dir["size"]]
     for child in dir["children"].values():
         if child["type"] == "directory":
-            sizes = sizes + find_dirs_sizes_less_than(child, amount)
+            sizes = sizes + get_dir_size_list(child)
     return sizes
 
+def find_dirs_sizes_less_than(dir, amount = 100000):
+    return pipe(
+        get_dir_size_list,
+        filter(lambda size: size <= amount),
+        sum
+    )(dir)
+
 def part_1(data):
-    lines = parse_data(data)
-    tree = get_dir_tree(lines)
+    tree = get_dir_tree(parse_data(data))
     add_dir_sizes(tree)
-    return sum(find_dirs_sizes_less_than(tree))
+    return find_dirs_sizes_less_than(tree)
+
+def find_smallest_dir_size_to_delete(dir, space_required):
+    return pipe(
+        get_dir_size_list,
+        filter(lambda size: size >= space_required),
+        min
+    )(dir)
 
 def part_2(data):
-    return "TODO"
+    tree = get_dir_tree(parse_data(data))
+    add_dir_sizes(tree)
+    remaining = 70000000 - tree["size"]
+    return find_smallest_dir_size_to_delete(tree, 30000000 - remaining)
 
 if __name__ == '__main__':
     with open('input.txt', 'r') as file:
