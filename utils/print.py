@@ -1,4 +1,4 @@
 import json
 
-def print_dict(obj):
+def print_json(obj):
     print(json.dumps(obj, sort_keys = True, indent = 4))

@@ -1,6 +1,6 @@
 from ramda import reduce, assoc_path, pipe, filter, sum
 from more_itertools import peekable
-from utils.print_dict import print_dict
+from utils.print import print_json
 
 def parse_data(data):
     return data.split("\n")
