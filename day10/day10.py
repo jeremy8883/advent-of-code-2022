@@ -1,5 +1,8 @@
 from ramda import pipe, split, map
 
+from utils.string import insert_every
+
+
 def parse_data(data):
     return pipe(
         split("\n"),
@@ -35,8 +38,22 @@ def part_1(data):
     instructions = parse_data(data)
     return get_signal_strength(instructions)
 
+def draw_image(instructions):
+    cycle_no = 0
+    reg_x = 1
+    crt = ["."] * (40 * 6)
+    for line in instructions:
+        for new_val in run_instruction(line["ins"], line["val"], reg_x):
+            if cycle_no % 40 in range(reg_x - 1, reg_x + 2):
+                crt[cycle_no] = "#"
+            cycle_no = cycle_no + 1
+            if new_val != None:
+                reg_x = new_val
+    return insert_every("".join(crt), "\n", 40)
+
 def part_2(data):
-    return "TODO"
+    instructions = parse_data(data)
+    return draw_image(instructions)
 
 if __name__ == '__main__':
     with open('input.txt', 'r') as file:

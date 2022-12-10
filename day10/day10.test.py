@@ -1,11 +1,7 @@
 import unittest
 from day10 import part_1, part_2
 
-class TestDay(unittest.TestCase):
-
-    def test_part_1(self):
-        self.assertEqual(
-            part_1("""addx 15
+input = """addx 15
 addx -11
 addx 6
 addx -3
@@ -150,14 +146,25 @@ addx -6
 addx -11
 noop
 noop
-noop"""),
+noop"""
+
+class TestDay(unittest.TestCase):
+
+    def test_part_1(self):
+        self.assertEqual(
+            part_1(input),
             13140
         )
 
     def test_part_2(self):
         self.assertEqual(
-            part_2("TODO"),
-            "TODO"
+            part_2(input),
+            """##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######....."""
         )
 
 if __name__ == '__main__':
