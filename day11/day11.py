@@ -24,7 +24,7 @@ def part_1(data):
     for round in range(20):
         for monkey in monkeys:
             for item in monkey["items"]:
-                inspection_counts[monkey["index"]] = inspection_counts[monkey["index"]] + 1
+                inspection_counts[monkey["index"]] += 1
                 new_worry_level = eval(monkey["operation"], { "old": item }) // 3
                 monkey_index = monkey["monkey_if_true"] if new_worry_level % monkey["test_divisible_by"] == 0 else monkey["monkey_if_false"]
                 monkeys[monkey_index]["items"].append(new_worry_level)
@@ -34,8 +34,27 @@ def part_1(data):
     return product(inspection_counts[-2:])
 
 def part_2(data):
-    # monkeys = parse_data(data)
-    return "TODO"
+    monkeys = parse_data(data)
+    inspection_counts = [0] * len(monkeys)
+
+    modulo = pipe(
+        map(lambda m: m["test_divisible_by"]),
+        product
+    )(monkeys)
+
+    for round in range(10000):
+        for monkey in monkeys:
+            for item in monkey["items"]:
+                inspection_counts[monkey["index"]] += 1
+                new_worry_level = eval(monkey["operation"], {"old": item}) % modulo
+                monkey_index = monkey["monkey_if_true"] if new_worry_level % monkey["test_divisible_by"] == 0\
+                    else monkey["monkey_if_false"]
+                monkeys[monkey_index]["items"].append(new_worry_level)
+            # All items will be thrown to another monkey
+            monkey["items"] = []
+    inspection_counts = sorted(inspection_counts)
+
+    return product(inspection_counts[-2:])
 
 if __name__ == '__main__':
     with open('input.txt', 'r') as file:
