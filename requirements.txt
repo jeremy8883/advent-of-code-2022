@@ -1,3 +1,4 @@
 pipe==2.0
 ramda==0.7.5
 more-itertools==9.0.0
+mypy==0.991

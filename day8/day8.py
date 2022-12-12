@@ -1,5 +1,5 @@
 from ramda import pipe, curry
-from utils.parsing import parse_2d_list
+from utils.parsing import parse_2d_int
 from utils.print import print_json
 from utils.list_2d import map_2d, map_2d_reverse, new_2d, reduce_2d
 
@@ -53,7 +53,7 @@ def count_visible_trees(trees, tall_map):
     )
 
 def part_1(data):
-    trees = parse_2d_list(data)
+    trees = parse_2d_int(data)
     tall_map = create_tall_map(trees)
     return count_visible_trees(trees, tall_map)
 
@@ -98,7 +98,7 @@ def get_scenic_score(trees, x, y):
     return total
 
 def part_2(data):
-    trees = parse_2d_list(data)
+    trees = parse_2d_int(data)
     score = reduce_2d(lambda acc, _, x, y: max(acc, get_scenic_score(trees, x, y)), 0, trees)
     return score
 
