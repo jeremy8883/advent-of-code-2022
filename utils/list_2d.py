@@ -61,3 +61,8 @@ def find_pos(predicate, lists):
             if predicate(cell, x, y):
                 return new_point(x, y)
     return None
+
+def enumerate_2d(lists):
+    for y, row in enumerate(lists):
+        for x, cell in enumerate(row):
+            yield x, y, cell
